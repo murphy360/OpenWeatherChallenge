@@ -27,20 +27,20 @@
                 android:text="Today, June 18"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView2" />
+                android:id="@+id/today_text_date" />
 
             <TextView
                 android:text="28"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="42sp"
-                android:id="@+id/textView3" />
+                android:id="@+id/today_text_temp_current" />
 
             <TextView
                 android:text="13"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView" />
+                android:id="@+id/today_text_temp_low" />
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
@@ -53,18 +53,19 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 app:srcCompat="@drawable/art_clear"
-                android:id="@+id/imageView" />
+                android:id="@+id/today_image_icon" />
 
             <TextView
                 android:text="Clear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView4" />
+                android:id="@+id/today_text_description" />
         </LinearLayout>
     </LinearLayout>
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:id="@+id/forcecast_list_view" />
 
 </LinearLayout>
