@@ -96,11 +96,11 @@ public class MainActivity extends AppCompatActivity
 
         TextView temp = (TextView) findViewById(R.id.today_text_temp_current);
         int roundedCurrentTemp = (int) Math.round(todayWeather.getCurrentTemp());
-        temp.setText(String.valueOf(roundedCurrentTemp));
+        temp.setText(String.valueOf(roundedCurrentTemp) + (char) 0x00B0);
 
         TextView lowTemp = (TextView) findViewById(R.id.today_text_temp_low);
         int roundedMinTemp = (int) Math.round(todayWeather.getMinTemp());
-        lowTemp.setText(String.valueOf(roundedMinTemp));
+        lowTemp.setText(String.valueOf(roundedMinTemp) + (char) 0x00B0);
 
         ImageView weatherIcon = (ImageView) findViewById(R.id.today_image_icon);
         if(todayWeather.getWeatherIconText().equalsIgnoreCase("01d")){
