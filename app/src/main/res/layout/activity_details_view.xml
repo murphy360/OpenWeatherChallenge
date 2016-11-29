@@ -1,13 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_details_view"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.innoalgo.openweatherchallenge.DetailsViewActivity">
+    android:orientation="vertical"
+    tools:context="com.innoalgo.openweatherchallenge.MainActivity">
 
-</RelativeLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="top|center">
+
+            <TextView
+                android:text="Today"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_day_text" />
+
+            <TextView
+                android:text="June 18"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_date_text" />
+
+            <TextView
+                android:text="28"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="42sp"
+                android:id="@+id/details_temp_current_text" />
+
+            <TextView
+                android:text="13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_temp_low_text" />
+
+            <TextView
+                android:text="Humidity: 81%"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView8" />
+
+            <TextView
+                android:text="Pressure: 1017 hPa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_pressure_text" />
+
+            <TextView
+                android:text="Wind: 2 km/h NW"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_wind_text" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="top|center">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:srcCompat="@drawable/art_clear"
+                android:id="@+id/details_weather_image_view" />
+
+            <TextView
+                android:text="Clear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_weather_text"
+                android:gravity="center"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>
