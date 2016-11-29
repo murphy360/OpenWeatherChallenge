@@ -5,8 +5,7 @@ package com.innoalgo.openweatherchallenge;
  */
 
 public class DailyWeather {
-
-
+    
     private String weatherIconText;
     private String dayText;
     private String weatherText;
