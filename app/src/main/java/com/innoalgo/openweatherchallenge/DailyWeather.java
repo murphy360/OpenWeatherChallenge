@@ -63,4 +63,7 @@ public class DailyWeather implements Serializable {
         return currentTemp;
     }
 
+    public Double getMinTemp() {
+        return minTemp;
+    }
 }
