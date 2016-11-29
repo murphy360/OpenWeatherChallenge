@@ -92,8 +92,8 @@ public final class QueryHelper {
             String icon = cloudDetails.getString("icon");
             Log.d(TAG, "iconString: " + icon);
 
-            int windSpeed = response.getInt("speed");
-            int windDirection = response.getInt("deg");
+            Double windSpeed = wind.getDouble("speed");
+            int windDirection = wind.getInt("deg");
 
 
 

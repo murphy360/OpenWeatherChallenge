@@ -33,7 +33,7 @@ import java.util.ArrayList;
  */
 public class ForecastListAdapter extends BaseAdapter {
     private ArrayList<DailyWeather> weatherList;
-    public static final String TAG = "UASDeviceAdapter";
+    public static final String TAG = "ForecastListAdapter";
 
     public ForecastListAdapter(Context context, ArrayList<DailyWeather> weatherList) {
            super();
@@ -77,7 +77,7 @@ public class ForecastListAdapter extends BaseAdapter {
             weatherView.setImageResource(R.drawable.ic_cloudy);
         }else if(mForecast.getWeatherIconText() == "10d"){//TODO update icon text
             weatherView.setImageResource(R.drawable.ic_fog);
-        }else if(mForecast.getWeatherIconText() == "04d"){//TODO update icon text
+        }else if(mForecast.getWeatherIconText() == "04d"){
             weatherView.setImageResource(R.drawable.ic_light_clouds);
         }else if(mForecast.getWeatherIconText() == "10d"){//TODO update icon text
             weatherView.setImageResource(R.drawable.ic_light_rain);
@@ -87,7 +87,7 @@ public class ForecastListAdapter extends BaseAdapter {
         dayTextView.setText(mForecast.getDayText());
 
         TextView weatherTextView = (TextView) listItemView.findViewById(R.id.list_weather_text);
-        weatherTextView.setText(mForecast.getWeatherText());
+        weatherTextView.setText(mForecast.getCloudText());
 
         TextView currentTempTextView = (TextView) listItemView.findViewById(R.id.list_temp_current);
         currentTempTextView.setText(mForecast.getCurrentTemp().toString());

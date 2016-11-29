@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -65,8 +66,8 @@ public class MainActivity extends AppCompatActivity
         Log.d(TAG, "updateUI: " + forcecasts.size());
         adapter.clear();
         adapter.add(forcecasts);
+        adapter.notifyDataSetChanged();
 
-        TextView date = (TextView) findViewById(R.id.today_text_date);
 
     }
 
@@ -81,9 +82,48 @@ public class MainActivity extends AppCompatActivity
 
         if (dailyWeathers != null && dailyWeathers.size() == 1) {
             todayWeather = dailyWeathers.get(0);
+            updateToday();
         }else if(dailyWeathers != null && !dailyWeathers.isEmpty()){
             updateUI(dailyWeathers);
         }
+    }
+
+    private void updateToday() {
+        Log.d(TAG, "updateToday: ");
+
+        TextView date = (TextView) findViewById(R.id.today_text_date);
+        date.setText(todayWeather.getDate().toString());
+
+        TextView temp = (TextView) findViewById(R.id.today_text_temp_current);
+        int roundedCurrentTemp = (int) Math.round(todayWeather.getCurrentTemp());
+        temp.setText(String.valueOf(roundedCurrentTemp));
+
+        TextView lowTemp = (TextView) findViewById(R.id.today_text_temp_low);
+        int roundedMinTemp = (int) Math.round(todayWeather.getMinTemp());
+        lowTemp.setText(String.valueOf(roundedMinTemp));
+
+        ImageView weatherIcon = (ImageView) findViewById(R.id.today_image_icon);
+        if(todayWeather.getWeatherIconText().equalsIgnoreCase("01d")){
+            Log.d(TAG, "updateToday: clear" );
+            weatherIcon.setImageResource(R.drawable.art_clear);
+        }else if(todayWeather.getWeatherIconText().equalsIgnoreCase("xxx")){//TODO update icon text
+            Log.d(TAG, "updateToday: clouds" );
+            weatherIcon.setImageResource(R.drawable.art_clouds);
+        }else if(todayWeather.getWeatherIconText().equalsIgnoreCase("10d")){//TODO update icon text
+            Log.d(TAG, "updateToday: fog" );
+            weatherIcon.setImageResource(R.drawable.art_fog);
+        }else if(todayWeather.getWeatherIconText().equalsIgnoreCase("04d")){
+            Log.d(TAG, "updateToday: light clouds" );
+            weatherIcon.setImageResource(R.drawable.art_light_clouds);
+        }else if(todayWeather.getWeatherIconText().equalsIgnoreCase("xxx")){//TODO update icon text
+            Log.d(TAG, "updateToday: light rain" );
+            weatherIcon.setImageResource(R.drawable.art_light_rain);
+        }
+
+        TextView weather = (TextView) findViewById(R.id.today_text_description);
+        weather.setText(todayWeather.getCloudText());
+
+
     }
 
     @Override

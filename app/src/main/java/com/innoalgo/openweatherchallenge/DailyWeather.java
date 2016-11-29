@@ -9,10 +9,8 @@ import java.util.Date;
 
 public class DailyWeather implements Serializable {
 
-    private Date forecastDate;
-    private String weatherIconText;
+    private Date date;
     private String dayText;
-    private String weatherText;
     private Double currentTemp;
     private Double minTemp;
     private Double maxTemp;
@@ -21,14 +19,14 @@ public class DailyWeather implements Serializable {
     private String cloudText;
     private String cloudDescription;
     private String iconText;
-    private int windSpeed;
+    private Double windSpeed;
     private int windDirection;
 
     public DailyWeather(Date d, Double temp, Double tempMin, Double tempMax, Double humidity,
                         Double pressure, String cloudText, String cloudDescription, String iconText,
-                        int windSpeed, int windDirection) {
+                        Double windSpeed, int windDirection) {
 
-        this.forecastDate = d;
+        this.date = d;
         this.currentTemp = temp;
         this.minTemp = tempMin;
         this.maxTemp = tempMax;
@@ -48,15 +46,11 @@ public class DailyWeather implements Serializable {
     //TODO Create Constructor
 
     public String getWeatherIconText() {
-        return weatherIconText;
+        return iconText;
     }
 
     public String getDayText() {
         return dayText;
-    }
-
-    public String getWeatherText(){
-        return weatherText;
     }
 
     public Double getCurrentTemp() {
@@ -65,5 +59,17 @@ public class DailyWeather implements Serializable {
 
     public Double getMinTemp() {
         return minTemp;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public String getCloudDescription() {
+        return cloudDescription;
+    }
+
+    public String getCloudText() {
+        return cloudText;
     }
 }
