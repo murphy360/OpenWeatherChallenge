@@ -77,7 +77,7 @@ public class ForecastListAdapter extends BaseAdapter {
             weatherView.setImageResource(R.drawable.ic_cloudy);
         }else if(mForecast.getWeatherIconText() == "10d"){//TODO update icon text
             weatherView.setImageResource(R.drawable.ic_fog);
-        }else if(mForecast.getWeatherIconText() == "10d"){//TODO update icon text
+        }else if(mForecast.getWeatherIconText() == "04d"){//TODO update icon text
             weatherView.setImageResource(R.drawable.ic_light_clouds);
         }else if(mForecast.getWeatherIconText() == "10d"){//TODO update icon text
             weatherView.setImageResource(R.drawable.ic_light_rain);
@@ -90,12 +90,20 @@ public class ForecastListAdapter extends BaseAdapter {
         weatherTextView.setText(mForecast.getWeatherText());
 
         TextView currentTempTextView = (TextView) listItemView.findViewById(R.id.list_temp_current);
-        currentTempTextView.setText(mForecast.getCurrentTempText());
+        currentTempTextView.setText(mForecast.getCurrentTemp().toString());
 
         TextView lowTempTextView = (TextView) listItemView.findViewById(R.id.list_temp_low);
-        lowTempTextView.setText(mForecast.getLowTempText());
+        lowTempTextView.setText(mForecast.getMinTemp().toString());
 
         return listItemView;
     }
 
+    public void clear() {
+        weatherList.clear();
+    }
+
+    public void add(ArrayList<DailyWeather> forecasts) {
+        clear();
+        weatherList.addAll(forecasts);
+    }
 }
