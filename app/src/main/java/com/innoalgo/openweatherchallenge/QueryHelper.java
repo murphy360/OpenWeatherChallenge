@@ -24,7 +24,6 @@ public final class QueryHelper {
 
     private static final String TAG = "QUERY_HELPER: ";
 
-
     /**
      * Create a private constructor because no one should ever create a {@link QueryHelper} object.
      * This class is only meant to hold static variables and methods, which can be accessed

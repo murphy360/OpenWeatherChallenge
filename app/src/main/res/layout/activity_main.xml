@@ -11,7 +11,7 @@
     <LinearLayout
         android:id="@+id/today_linear_layout"
         android:layout_width="match_parent"
-        android:layout_height="165dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:elevation="10dp"
         android:background="@color/colorLightBlue">
@@ -22,8 +22,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-            android:paddingLeft="48dp"
-            android:paddingRight="5dp">
+            android:paddingLeft="32dp"
+            android:paddingBottom="5dp">
 
             <TextView
                 android:id="@+id/today_text_date"
@@ -51,7 +51,6 @@
                 android:gravity="left"
                 android:text="13"
                 android:textSize="22sp"
-                android:paddingTop="5dp"
                 android:textColor="@color/colorWhite"/>
         </LinearLayout>
 
@@ -60,7 +59,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="5dp">
 
             <ImageView
                 android:id="@+id/today_image_icon"
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Clear"
-                android:textSize="22sp"
+                android:textSize="@dimen/text_size_standard"
                 android:textColor="@color/colorWhite"/>
         </LinearLayout>
     </LinearLayout>
@@ -84,7 +84,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorGray"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"/>
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"/>
 
 </LinearLayout>
