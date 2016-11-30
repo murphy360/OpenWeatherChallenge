@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<ArrayList<DailyWeather>>{
 
     private final String URL_WEATHER_CURRENT = "http://api.openweathermap.org/data/2.5/weather?q=Atlanta,ga&units=imperial";
-    private final String URL_WEATHER_FORECAST = "http://api.openweathermap.org/data/2.5/forecast/daily?q=Atlanta,ga&units=imperial&cnt=5";
+    private final String URL_WEATHER_FORECAST = "http://api.openweathermap.org/data/2.5/forecast/daily?q=Atlanta,ga&units=imperial&cnt=6";
 
     private static final int WEATHER_LOADER_TODAY_ID = 1;
     private static final int WEATHER_LOADER_FORECAST_ID = 2;
@@ -117,23 +117,10 @@ public class MainActivity extends AppCompatActivity
         int roundedMinTemp = (int) Math.round(todayWeather.getMinTemp());
         lowTemp.setText(String.valueOf(roundedMinTemp) + (char) 0x00B0);
 
+        Log.d(TAG, "updateToday icon: " + todayWeather.getWeatherIconText());
         ImageView weatherIcon = (ImageView) findViewById(R.id.today_image_icon);
-        if(todayWeather.getWeatherIconText().equalsIgnoreCase("01d")){
-            Log.d(TAG, "updateToday: clear" );
-            weatherIcon.setImageResource(R.drawable.art_clear);
-        }else if(todayWeather.getWeatherIconText().equalsIgnoreCase("xxx")){//TODO update icon text
-            Log.d(TAG, "updateToday: clouds" );
-            weatherIcon.setImageResource(R.drawable.art_clouds);
-        }else if(todayWeather.getWeatherIconText().equalsIgnoreCase("10d")){//TODO update icon text
-            Log.d(TAG, "updateToday: fog" );
-            weatherIcon.setImageResource(R.drawable.art_fog);
-        }else if(todayWeather.getWeatherIconText().equalsIgnoreCase("04d")){
-            Log.d(TAG, "updateToday: light clouds" );
-            weatherIcon.setImageResource(R.drawable.art_light_clouds);
-        }else if(todayWeather.getWeatherIconText().equalsIgnoreCase("xxx")){//TODO update icon text
-            Log.d(TAG, "updateToday: light rain" );
-            weatherIcon.setImageResource(R.drawable.art_light_rain);
-        }
+        weatherIcon.setImageBitmap(todayWeather.getWeatherIcon());
+
 
         TextView weather = (TextView) findViewById(R.id.today_text_description);
         weather.setText(todayWeather.getCloudText());

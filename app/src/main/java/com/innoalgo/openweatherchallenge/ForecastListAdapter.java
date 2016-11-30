@@ -17,6 +17,7 @@ package com.innoalgo.openweatherchallenge;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,31 +70,23 @@ public class ForecastListAdapter extends BaseAdapter {
         // Get the {@link DailyWeather} object located at this position in the list
         DailyWeather mForecast = getItem(position);
 
-        //TODO ensure all returns are accounted for
+        Log.d(TAG, "getView icon: " + mForecast.getWeatherIconText());
         ImageView weatherView = (ImageView) listItemView.findViewById(R.id.list_weather_image_view);
-        if(mForecast.getWeatherIconText() == "01d"){
-            weatherView.setImageResource(R.drawable.ic_clear);
-        }else if(mForecast.getWeatherIconText() == "10d"){//TODO update icon text
-            weatherView.setImageResource(R.drawable.ic_cloudy);
-        }else if(mForecast.getWeatherIconText() == "10d"){//TODO update icon text
-            weatherView.setImageResource(R.drawable.ic_fog);
-        }else if(mForecast.getWeatherIconText() == "04d"){
-            weatherView.setImageResource(R.drawable.ic_light_clouds);
-        }else if(mForecast.getWeatherIconText() == "10d"){//TODO update icon text
-            weatherView.setImageResource(R.drawable.ic_light_rain);
-        }
+        weatherView.setImageBitmap(mForecast.getWeatherIcon());
 
         TextView dayTextView = (TextView) listItemView.findViewById(R.id.list_day);
-        dayTextView.setText(mForecast.getDayText());
+        dayTextView.setText(mForecast.getDayOfWeek());
 
         TextView weatherTextView = (TextView) listItemView.findViewById(R.id.list_weather_text);
         weatherTextView.setText(mForecast.getCloudText());
 
-        TextView currentTempTextView = (TextView) listItemView.findViewById(R.id.list_temp_current);
-        currentTempTextView.setText(mForecast.getCurrentTemp().toString());
+        TextView maxTempTextView = (TextView) listItemView.findViewById(R.id.list_temp_current);
+        int roundedMaxTemp = (int) Math.round(mForecast.getMaxTemp());
+        maxTempTextView.setText(String.valueOf(roundedMaxTemp) + (char) 0x00B0);
 
         TextView lowTempTextView = (TextView) listItemView.findViewById(R.id.list_temp_low);
-        lowTempTextView.setText(mForecast.getMinTemp().toString());
+        int roundedMinTemp = (int) Math.round(mForecast.getMinTemp());
+        lowTempTextView.setText(String.valueOf(roundedMinTemp) + (char) 0x00B0);
 
         return listItemView;
     }

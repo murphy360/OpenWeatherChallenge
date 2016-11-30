@@ -1,5 +1,6 @@
 package com.innoalgo.openweatherchallenge;
 
+import android.content.Context;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -7,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -54,8 +56,9 @@ public final class QueryHelper {
      * Return a list of {@link DailyWeather} objects that has been built up from
      * parsing a JSON response.
      * @param requestUrl
+     * @param context
      */
-    public static ArrayList<DailyWeather> extractCurrentWeather(String requestUrl) {
+    public static ArrayList<DailyWeather> extractCurrentWeather(String requestUrl, Context context) {
         // Create an empty ArrayList that we can start adding DailyWeather to
         DailyWeather weather;
 
@@ -80,7 +83,9 @@ public final class QueryHelper {
             JSONObject wind = response.getJSONObject("wind");
             JSONObject clouds = response.getJSONObject("clouds");
             Long time = response.getLong("dt");
-            Date d = new Date(time);
+            Log.d(TAG, "extractCurrentWeather: longtime " + time);
+            Date d = new Date(time*1000);
+            Log.d(TAG, "extractCurrentWeather: date " + d.toString());
 
             JSONObject system = response.getJSONObject("sys");
 
@@ -98,7 +103,7 @@ public final class QueryHelper {
 
 
             weather = new DailyWeather(d, temp, tempMin, tempMax, humidity, pressure, cloudText,
-                    cloudDescription, icon, windSpeed, windDirection);
+                    cloudDescription, icon, windSpeed, windDirection, context);
         } catch (JSONException e) {
             // If an error is thrown when executing any of the above statements in the "try" block,
             // catch the exception here, so the app doesn't crash. Print a log message
@@ -113,7 +118,7 @@ public final class QueryHelper {
         return weathers;
     }
 
-    public static ArrayList<DailyWeather> extractForcastWeather(String requestUrl) {
+    public static ArrayList<DailyWeather> extractForecastWeather(String requestUrl, Context context) {
         // Create an empty ArrayList that we can start adding DailyWeather to
         ArrayList<DailyWeather> weathers = new ArrayList<>();
 
@@ -121,12 +126,14 @@ public final class QueryHelper {
 
             JSONObject response = new JSONObject(fetchWeatherData(requestUrl));
 
-            JSONArray weatherArray = response.getJSONArray("list");//TODO Parse IAW API
+            JSONArray weatherArray = response.getJSONArray("list");
             for (int i = 0; i < weatherArray.length(); i++){
                 JSONObject aDay = weatherArray.getJSONObject(i);
 
                 Long time = aDay.getLong("dt");
-                Date d = new Date(time);
+                Log.d(TAG, "extractForecastWeather: long time" + time);
+                Date d = new Date(time*1000);
+                Log.d(TAG, "extractForecastWeather: Date:" + d.toString());
 
                 JSONObject tempObject = aDay.getJSONObject("temp");
                 Double temp = tempObject.getDouble("day");
@@ -147,8 +154,14 @@ public final class QueryHelper {
 
 
                 DailyWeather weather = new DailyWeather(d, temp, tempMin, tempMax, humidity, pressure, cloudText,
-                        cloudDescription, icon, windSpeed, windDirection);
-                weathers.add(weather);
+                        cloudDescription, icon, windSpeed, windDirection, context);
+                Date today = new Date();
+
+                //Request is returning Today in the response...
+                //We don't want to have Today in the forecast list.
+                if (d.getDay() - today.getDay() != 0){
+                    weathers.add(weather);
+                }
             }
         } catch (JSONException e) {
             // If an error is thrown when executing any of the above statements in the "try" block,
@@ -231,6 +244,26 @@ public final class QueryHelper {
             }
         }
         return output.toString();
+    }
+
+    public static byte[] imageByter(Context ctx, String strurl) {
+        try {
+            URL url = new URL(strurl);
+            InputStream is = (InputStream) url.getContent();
+            byte[] buffer = new byte[8192];
+            int bytesRead;
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+            while ((bytesRead = is.read(buffer)) != -1) {
+                output.write(buffer, 0, bytesRead);
+            }
+            return output.toByteArray();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }
