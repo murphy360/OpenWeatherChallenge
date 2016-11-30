@@ -18,9 +18,10 @@ public class MainActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<ArrayList<DailyWeather>>{
 
     private final String URL_WEATHER_CURRENT = "http://api.openweathermap.org/data/2.5/weather?q=Atlanta,ga&units=imperial";
-    private final String API_KEY = "bf2eec4c617f2acfd321fa89f113bc45";//TODO add your API KEY here
+    private final String URL_WEATHER_FORECAST = "http://api.openweathermap.org/data/2.5/forecast/daily?q=Atlanta,ga&units=imperial&cnt=5";
 
-    private static final int WEATHER_LOADER_ID = 1;
+    private static final int WEATHER_LOADER_TODAY_ID = 1;
+    private static final int WEATHER_LOADER_FORECAST_ID = 2;
 
     protected static final int INTENT_DETAILS = 2;
 
@@ -37,7 +38,9 @@ public class MainActivity extends AppCompatActivity
 
         connectUserInterface();
 
-        getLoaderManager().initLoader(WEATHER_LOADER_ID, null, this).forceLoad();
+
+        getLoaderManager().initLoader(WEATHER_LOADER_FORECAST_ID, null, this).forceLoad();
+        getLoaderManager().initLoader(WEATHER_LOADER_TODAY_ID, null, this).forceLoad();
 
 
     }
@@ -74,18 +77,30 @@ public class MainActivity extends AppCompatActivity
     @Override
     public Loader<ArrayList<DailyWeather>> onCreateLoader(int i, Bundle bundle) {
 
-        return new WeatherLoader(this, URL_WEATHER_CURRENT + "&appid=" + API_KEY);
+        if(i == WEATHER_LOADER_FORECAST_ID){
+
+            return new WeatherLoader(this, URL_WEATHER_CURRENT);
+        }else{
+            return new WeatherLoader(this, URL_WEATHER_FORECAST);
+        }
     }
 
     @Override
     public void onLoadFinished(Loader<ArrayList<DailyWeather>> loader, ArrayList<DailyWeather> dailyWeathers) {
 
         if (dailyWeathers != null && dailyWeathers.size() == 1) {
+            Log.d(TAG, "onLoadFinished: today");
             todayWeather = dailyWeathers.get(0);
             updateToday();
         }else if(dailyWeathers != null && !dailyWeathers.isEmpty()){
+            Log.d(TAG, "onLoadFinished: Forecast");
             updateUI(dailyWeathers);
         }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<ArrayList<DailyWeather>> loader) {
+        adapter.clear();
     }
 
     private void updateToday() {
@@ -124,10 +139,5 @@ public class MainActivity extends AppCompatActivity
         weather.setText(todayWeather.getCloudText());
 
 
-    }
-
-    @Override
-    public void onLoaderReset(Loader<ArrayList<DailyWeather>> loader) {
-        adapter.clear();
     }
 }

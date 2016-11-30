@@ -115,41 +115,49 @@ public final class QueryHelper {
 
     public static ArrayList<DailyWeather> extractForcastWeather(String requestUrl) {
         // Create an empty ArrayList that we can start adding DailyWeather to
-        ArrayList<DailyWeather> weather = new ArrayList<>();
+        ArrayList<DailyWeather> weathers = new ArrayList<>();
 
-        // Try to parse the JSON_RESPONSE. If there's a problem with the way the JSON
-        // is formatted, a JSONException exception object will be thrown.
-        // Catch the exception so the app doesn't crash, and print the error message to the logs.
         try {
 
             JSONObject response = new JSONObject(fetchWeatherData(requestUrl));
 
-            JSONArray weatherObjects = response.getJSONArray("features");//TODO Parse IAW API
-            Log.d(TAG, weatherObjects.toString());
-            for(int i = 0; i<weatherObjects.length(); i++){
-                JSONObject e = weatherObjects.getJSONObject(i);
+            JSONArray weatherArray = response.getJSONArray("list");//TODO Parse IAW API
+            for (int i = 0; i < weatherArray.length(); i++){
+                JSONObject aDay = weatherArray.getJSONObject(i);
 
-                Log.d(TAG + " Weather: ", e.toString());
-                JSONObject properties = e.getJSONObject("properties");
-                Log.d(TAG + " Properties: ", properties.toString());
-                Double mag = properties.getDouble("mag");
-                Log.d(TAG + " mag: ", mag.toString());
-                String location = properties.getString("place");
-                Long timeMil = properties.getLong("time");
+                Long time = aDay.getLong("dt");
+                Date d = new Date(time);
 
-                String url = properties.getString("url");
-                weather.add(new DailyWeather());
+                JSONObject tempObject = aDay.getJSONObject("temp");
+                Double temp = tempObject.getDouble("day");
+                Double tempMin = tempObject.getDouble("min");
+                Double tempMax = tempObject.getDouble("max");
+
+                Double humidity = aDay.getDouble("humidity");
+                Double pressure = aDay.getDouble("pressure");
+
+                JSONArray cloudArray = aDay.getJSONArray("weather");
+                JSONObject cloudDetails = cloudArray.getJSONObject(0);
+                String cloudText = cloudDetails.getString("main");
+                String cloudDescription = cloudDetails.getString("description");
+                String icon = cloudDetails.getString("icon");
+
+                Double windSpeed = aDay.getDouble("speed");
+                int windDirection = aDay.getInt("deg");
+
+
+                DailyWeather weather = new DailyWeather(d, temp, tempMin, tempMax, humidity, pressure, cloudText,
+                        cloudDescription, icon, windSpeed, windDirection);
+                weathers.add(weather);
             }
-
         } catch (JSONException e) {
             // If an error is thrown when executing any of the above statements in the "try" block,
             // catch the exception here, so the app doesn't crash. Print a log message
             // with the message from the exception.
             Log.e(TAG, "Problem parsing the earthquake JSON results", e);
+            return null;//TODO is this right?
         }
-
-        // Return the list of weather
-        return weather;
+        return weathers;
     }
 
     /**
