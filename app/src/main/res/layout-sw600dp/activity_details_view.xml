@@ -10,8 +10,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/colorGray"
-    tools:context="com.innoalgo.openweatherchallenge.MainActivity">
+    tools:context="com.innoalgo.openweatherchallenge.MainActivity"
+    android:background="@color/colorGray">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,19 +29,19 @@
                 android:id="@+id/details_day_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:gravity="left"
                 android:textSize="@dimen/text_size_header_primary"
-                android:text="Today"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+                android:textColor="@color/colorBlack"
+                android:text="Today"/>
 
             <TextView
                 android:id="@+id/details_date_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
-                android:textSize="@dimen/text_size_header_secondary"
                 android:layout_marginBottom="16dp"
+                android:textSize="@dimen/text_size_header_primary"
                 android:text="June 18" />
 
             <TextView
@@ -49,9 +49,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="@color/colorBlack"
+                android:layout_margin="10dp"
                 android:text="28"
-                android:textSize="@dimen/text_size_temp_callout"/>
+                android:textColor="@color/colorBlack"
+                android:textSize="85sp" />
 
             <TextView
                 android:id="@+id/details_temp_low_text"
@@ -66,7 +67,7 @@
                 android:id="@+id/details_humidity_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_margin="10dp"
                 android:textSize="@dimen/text_size_standard"
                 android:textColor="@color/colorBlack"
                 android:text="Humidity: 81%"/>
@@ -75,7 +76,7 @@
                 android:id="@+id/details_wind_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_margin="10dp"
                 android:textSize="@dimen/text_size_standard"
                 android:textColor="@color/colorBlack"
                 android:text="Wind: 2 km/h NW" />
@@ -84,7 +85,7 @@
                 android:id="@+id/details_pressure_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_margin="10dp"
                 android:textSize="@dimen/text_size_standard"
                 android:textColor="@color/colorBlack"
                 android:text="Pressure: 1017 hPa" />
@@ -100,9 +101,9 @@
 
             <ImageView
                 android:id="@+id/details_weather_image_view"
-                android:layout_width="175dp"
-                android:layout_height="175dp"
-                android:layout_marginTop="30dp"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_marginTop="50dp"
                 app:srcCompat="@drawable/art_clear" />
 
             <TextView

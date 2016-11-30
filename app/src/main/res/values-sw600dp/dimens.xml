@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_size_header_primary">28sp</dimen>
+    <dimen name="text_size_temp_callout">85sp</dimen>
+    <dimen name="text_size_temp_secondary">32sp</dimen>
+    <dimen name="text_size_standard">26sp</dimen>
+</resources>
