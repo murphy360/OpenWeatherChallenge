@@ -25,9 +25,9 @@
 
     <ImageView
         android:id="@+id/list_weather_image_view"
-        android:layout_width="88dp"
-        android:layout_height="88dp"
-        android:scaleType="centerCrop"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:scaleType="fitCenter"
         android:padding="16dp"
         android:src="@drawable/ic_cloudy" />
 
@@ -46,6 +46,7 @@
             android:gravity="center_vertical"
             android:textAppearance="?android:textAppearanceMedium"
             android:textStyle="bold"
+            android:textSize="18sp"
             tools:text="Tomorrow" />
 
         <TextView
@@ -70,7 +71,8 @@
             android:layout_height="50dp"
             android:gravity="center_vertical"
             android:textAppearance="?android:textAppearanceMedium"
-            android:id="@+id/list_temp_current" />
+            android:id="@+id/list_temp_current"
+            android:textSize="18sp"/>
 
         <TextView
             android:text="12"
