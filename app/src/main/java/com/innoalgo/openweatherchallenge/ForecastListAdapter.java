@@ -12,9 +12,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+/**
+ * Created by Corey on 11/29/2016.
+ */
+
 public class ForecastListAdapter extends BaseAdapter {
-    private ArrayList<DailyWeather> weatherList;
     public static final String TAG = "ForecastListAdapter";
+    private ArrayList<DailyWeather> weatherList;
     private Context context;
 
     public ForecastListAdapter(Context context, ArrayList<DailyWeather> weatherList) {
@@ -62,11 +66,13 @@ public class ForecastListAdapter extends BaseAdapter {
 
         TextView maxTempTextView = (TextView) listItemView.findViewById(R.id.list_temp_current);
         int roundedMaxTemp = (int) Math.round(mForecast.getMaxTemp());
-        maxTempTextView.setText(String.valueOf(roundedMaxTemp) + (char) 0x00B0);
+        String maxTemp = String.valueOf(roundedMaxTemp) + (char) 0x00B0;
+        maxTempTextView.setText(maxTemp);
 
         TextView lowTempTextView = (TextView) listItemView.findViewById(R.id.list_temp_low);
         int roundedMinTemp = (int) Math.round(mForecast.getMinTemp());
-        lowTempTextView.setText(String.valueOf(roundedMinTemp) + (char) 0x00B0);
+        String minTemp = String.valueOf(roundedMinTemp) + (char) 0x00B0;
+        lowTempTextView.setText(minTemp);
 
         return listItemView;
     }

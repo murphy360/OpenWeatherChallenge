@@ -73,15 +73,6 @@
                 android:text="Humidity: 81%"/>
 
             <TextView
-                android:id="@+id/details_wind_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:textSize="@dimen/text_size_standard"
-                android:textColor="@color/colorBlack"
-                android:text="Wind: 2 km/h NW" />
-
-            <TextView
                 android:id="@+id/details_pressure_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -89,6 +80,15 @@
                 android:textSize="@dimen/text_size_standard"
                 android:textColor="@color/colorBlack"
                 android:text="Pressure: 1017 hPa" />
+
+            <TextView
+                android:id="@+id/details_wind_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textSize="@dimen/text_size_standard"
+                android:textColor="@color/colorBlack"
+                android:text="Wind: 2 km/h NW" />
 
         </LinearLayout>
 

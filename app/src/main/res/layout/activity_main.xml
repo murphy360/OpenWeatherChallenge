@@ -11,7 +11,7 @@
     <LinearLayout
         android:id="@+id/today_linear_layout"
         android:layout_width="match_parent"
-        android:layout_height="175dp"
+        android:layout_height="165dp"
         android:orientation="horizontal"
         android:elevation="10dp"
         android:background="@color/colorLightBlue">
@@ -22,37 +22,36 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-            android:paddingLeft="5dp"
+            android:paddingLeft="48dp"
             android:paddingRight="5dp">
 
             <TextView
                 android:id="@+id/today_text_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="left"
                 android:text="Today, June 18"
-                android:textSize="16sp"
-                android:padding="10dp"
+                android:textSize="@dimen/text_size_standard"
+                android:paddingTop="10dp"
                 android:textColor="@color/colorWhite"/>
 
             <TextView
                 android:id="@+id/today_text_temp_current"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="left"
                 android:text="28"
-                android:textSize="48sp"
-                android:padding="5dp"
+                android:textSize="@dimen/text_size_temp_callout"
                 android:textColor="@color/colorWhite" />
 
             <TextView
                 android:id="@+id/today_text_temp_low"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="left"
                 android:text="13"
                 android:textSize="22sp"
-                android:padding="5dp"
+                android:paddingTop="5dp"
                 android:textColor="@color/colorWhite"/>
         </LinearLayout>
 
@@ -84,7 +83,7 @@
         android:id="@+id/forcecast_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite"
+        android:background="@color/colorGray"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"/>
 

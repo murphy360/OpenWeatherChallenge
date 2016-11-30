@@ -30,7 +30,6 @@ public class DailyWeather implements Serializable {
     private String iconText;
     private Double windSpeed;
     private int windDirection;
-    private String bitmapDirectory;
 
 
     private String TAG = "DailyWeather: ";

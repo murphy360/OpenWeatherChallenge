@@ -22,22 +22,19 @@ import java.util.Date;
 
 public final class QueryHelper {
 
-    private static final String TAG = "QUERYUTILS";
+    private static final String TAG = "QUERY_HELPER: ";
 
 
     /**
      * Create a private constructor because no one should ever create a {@link QueryHelper} object.
      * This class is only meant to hold static variables and methods, which can be accessed
-     * directly from the class name QueryUtils (and an object instance of QueryUtils is not needed).
+     * directly from the class name QueryHelper (and an object instance of QueryHelper is not needed).
      */
     private QueryHelper() {
     }
 
     public static String fetchWeatherData(String requestUrl) {
-        Log.d(TAG, "fetchWeatherData: ");
-        // Create URL object
         URL url = createUrl(requestUrl);
-        // Perform HTTP request to the URL and receive a JSON response back
         String jsonResponse = null;
         try {
             jsonResponse = makeHttpRequest(url);
@@ -47,14 +44,9 @@ public final class QueryHelper {
         return jsonResponse;
     }
 
-    /**
-     * Return a list of {@link DailyWeather} objects that has been built up from
-     * parsing a JSON response.
-     * @param requestUrl
-     * @param context
-     */
-    public static ArrayList<DailyWeather> extractCurrentWeather(String requestUrl, Context context) {
-        // Create an empty ArrayList that we can start adding DailyWeather to
+
+    public static ArrayList<DailyWeather> getCurrentWeather(String requestUrl, Context context) {
+
         DailyWeather weather;
 
         // Try to parse the JSON_RESPONSE. If there's a problem with the way the JSON
@@ -64,38 +56,26 @@ public final class QueryHelper {
 
             JSONObject response = new JSONObject(fetchWeatherData(requestUrl));
             
-            JSONArray weatherArray = response.getJSONArray("weather");//TODO Parse IAW API
-            Log.d(TAG, weatherArray.toString());
-            JSONObject coord = response.getJSONObject("coord");
-            String base = response.getString("base");
+            JSONArray weatherArray = response.getJSONArray("weather");
+            JSONObject cloudDetails = weatherArray.getJSONObject(0);
+            String cloudText = cloudDetails.getString("main");
+            String cloudDescription = cloudDetails.getString("description");
+            String icon = cloudDetails.getString("icon");
+
+            JSONObject wind = response.getJSONObject("wind");
+            Double windSpeed = wind.getDouble("speed");
+            int windDirection = wind.getInt("deg");
+
+            JSONObject clouds = response.getJSONObject("clouds");
+            Long time = response.getLong("dt");
+            Date d = new Date(time*1000); //UNIX to Milliseconds
+
             JSONObject main = response.getJSONObject("main");
             Double temp = main.getDouble("temp");
             Double tempMin = main.getDouble("temp_min");
             Double tempMax = main.getDouble("temp_max");
             Double humidity = main.getDouble("humidity");
             Double pressure = main.getDouble("pressure");
-
-            JSONObject wind = response.getJSONObject("wind");
-            JSONObject clouds = response.getJSONObject("clouds");
-            Long time = response.getLong("dt");
-            Log.d(TAG, "extractCurrentWeather: longtime " + time);
-            Date d = new Date(time*1000);
-            Log.d(TAG, "extractCurrentWeather: date " + d.toString());
-
-            JSONObject system = response.getJSONObject("sys");
-
-            JSONObject cloudDetails = weatherArray.getJSONObject(0);
-            String cloudText = cloudDetails.getString("main");
-            Log.d(TAG, "cloudText: " + cloudText);
-            String cloudDescription = cloudDetails.getString("description");
-            Log.d(TAG, "cloudDescription: " + cloudDescription);
-            String icon = cloudDetails.getString("icon");
-            Log.d(TAG, "iconString: " + icon);
-
-            Double windSpeed = wind.getDouble("speed");
-            int windDirection = wind.getInt("deg");
-
-
 
             weather = new DailyWeather(d, temp, tempMin, tempMax, humidity, pressure, cloudText,
                     cloudDescription, icon, windSpeed, windDirection, context);
@@ -104,49 +84,41 @@ public final class QueryHelper {
             // catch the exception here, so the app doesn't crash. Print a log message
             // with the message from the exception.
             Log.e(TAG, "Problem parsing the JSON results", e);
-            return null;//TODO is this right?
+            return null;
         }
 
-        // Return the list of weather
         ArrayList<DailyWeather> weathers = new ArrayList<>();
         weathers.add(weather);
         return weathers;
     }
 
-    public static ArrayList<DailyWeather> extractForecastWeather(String requestUrl, Context context) {
-        // Create an empty ArrayList that we can start adding DailyWeather to
+    public static ArrayList<DailyWeather> getForecastWeather(String requestUrl, Context context) {
+
         ArrayList<DailyWeather> weathers = new ArrayList<>();
 
         try {
-
             JSONObject response = new JSONObject(fetchWeatherData(requestUrl));
+            JSONArray fiveDayForecastArray = response.getJSONArray("list");
 
-            JSONArray weatherArray = response.getJSONArray("list");
-            for (int i = 0; i < weatherArray.length(); i++){
-                JSONObject aDay = weatherArray.getJSONObject(i);
-
+            for (int i = 0; i < fiveDayForecastArray.length(); i++){
+                JSONObject aDay = fiveDayForecastArray.getJSONObject(i);
+                Double humidity = aDay.getDouble("humidity");
+                Double pressure = aDay.getDouble("pressure");
+                Double windSpeed = aDay.getDouble("speed");
+                int windDirection = aDay.getInt("deg");
                 Long time = aDay.getLong("dt");
-                Log.d(TAG, "extractForecastWeather: long time" + time);
                 Date d = new Date(time*1000);
-                Log.d(TAG, "extractForecastWeather: Date:" + d.toString());
 
                 JSONObject tempObject = aDay.getJSONObject("temp");
                 Double temp = tempObject.getDouble("day");
                 Double tempMin = tempObject.getDouble("min");
                 Double tempMax = tempObject.getDouble("max");
 
-                Double humidity = aDay.getDouble("humidity");
-                Double pressure = aDay.getDouble("pressure");
-
                 JSONArray cloudArray = aDay.getJSONArray("weather");
                 JSONObject cloudDetails = cloudArray.getJSONObject(0);
                 String cloudText = cloudDetails.getString("main");
                 String cloudDescription = cloudDetails.getString("description");
                 String icon = cloudDetails.getString("icon");
-
-                Double windSpeed = aDay.getDouble("speed");
-                int windDirection = aDay.getInt("deg");
-
 
                 DailyWeather weather = new DailyWeather(d, temp, tempMin, tempMax, humidity, pressure, cloudText,
                         cloudDescription, icon, windSpeed, windDirection, context);
@@ -159,20 +131,13 @@ public final class QueryHelper {
                 }
             }
         } catch (JSONException e) {
-            // If an error is thrown when executing any of the above statements in the "try" block,
-            // catch the exception here, so the app doesn't crash. Print a log message
-            // with the message from the exception.
             Log.e(TAG, "Problem parsing the JSON results", e);
-            return null;//TODO is this right?
+            return null;
         }
         return weathers;
     }
 
-    /**
-     * Returns new URL object from the given string URL.
-     */
     private static URL createUrl(String stringUrl) {
-        Log.d(TAG, "createUrl: " + stringUrl);
         URL url = null;
         try {
             url = new URL(stringUrl);
@@ -185,7 +150,6 @@ public final class QueryHelper {
      * Make an HTTP request to the given URL and return a String as the response.
      */
     private static String makeHttpRequest(URL url) throws IOException {
-        Log.d(TAG, "makeHttpRequest: ");
         String jsonResponse = "";
 
         // If the URL is null, then return early.
@@ -206,7 +170,7 @@ public final class QueryHelper {
             // then read the input stream and parse the response.
             if (urlConnection.getResponseCode() == 200) {
                 inputStream = urlConnection.getInputStream();
-                jsonResponse = readFromStream(inputStream);
+                jsonResponse = readJsonResponseFromStream(inputStream);
             } else {
                 Log.e(TAG, "Error response code: " + urlConnection.getResponseCode());
             }
@@ -227,7 +191,7 @@ public final class QueryHelper {
      * Convert the {@link InputStream} into a String which contains the
      * whole JSON response from the server.
      */
-    private static String readFromStream(InputStream inputStream) throws IOException {
+    private static String readJsonResponseFromStream(InputStream inputStream) throws IOException {
         StringBuilder output = new StringBuilder();
         if (inputStream != null) {
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Charset.forName("UTF-8"));

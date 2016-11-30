@@ -17,18 +17,18 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+/**
+ * Created by Corey on 11/29/2016.
+ */
+
 public class MainActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<ArrayList<DailyWeather>>{
 
-    private final String URL_WEATHER_CURRENT = "http://api.openweathermap.org/data/2.5/weather?q=Atlanta,ga&units=imperial";
-    private final String URL_WEATHER_FORECAST = "http://api.openweathermap.org/data/2.5/forecast/daily?q=Atlanta,ga&units=imperial&cnt=6";
-
+    protected static final int INTENT_DETAILS = 2;
     private static final int WEATHER_LOADER_TODAY_ID = 1;
     private static final int WEATHER_LOADER_FORECAST_ID = 2;
-
-    protected static final int INTENT_DETAILS = 2;
-
-
+    private final String URL_WEATHER_CURRENT = "http://api.openweathermap.org/data/2.5/weather?q=Atlanta,ga&units=imperial";
+    private final String URL_WEATHER_FORECAST = "http://api.openweathermap.org/data/2.5/forecast/daily?q=Atlanta,ga&units=imperial&cnt=6";
     private ListView forcecastListView;
     private ForecastListAdapter adapter;
     private String TAG = "MAIN ACTIVITY: ";
@@ -108,36 +108,34 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void updateToday() {
-        Log.d(TAG, "updateToday: ");
 
         TextView date = (TextView) findViewById(R.id.today_text_date);
 
         // November, 29
         DateFormat format = new SimpleDateFormat(" MMMM, dd");
+
         String dateText = format.format(todayWeather.getDate());
-        date.setText(todayWeather.getDayOfWeek() + dateText);
+        dateText = todayWeather.getDayOfWeek() + dateText;
+        date.setText(dateText);
 
         TextView temp = (TextView) findViewById(R.id.today_text_temp_current);
         int roundedCurrentTemp = (int) Math.round(todayWeather.getCurrentTemp());
-        temp.setText(String.valueOf(roundedCurrentTemp) + (char) 0x00B0);
+        String tempText = String.valueOf(roundedCurrentTemp) + (char) 0x00B0;
+        temp.setText(tempText);
 
         TextView lowTemp = (TextView) findViewById(R.id.today_text_temp_low);
         int roundedMinTemp = (int) Math.round(todayWeather.getMinTemp());
-        lowTemp.setText(String.valueOf(roundedMinTemp) + (char) 0x00B0);
+        String minText = String.valueOf(roundedMinTemp) + (char) 0x00B0;
+        lowTemp.setText(minText);
 
-        Log.d(TAG, "updateToday icon: " + todayWeather.getWeatherIconText());
         ImageView weatherIcon = (ImageView) findViewById(R.id.today_image_icon);
         weatherIcon.setImageBitmap(todayWeather.getWeatherIcon(this));
 
-
         TextView weather = (TextView) findViewById(R.id.today_text_description);
         weather.setText(todayWeather.getCloudText());
-
-
     }
 
     private void updateUI(ArrayList<DailyWeather> forcecasts) {
-        Log.d(TAG, "updateUI: " + forcecasts.size());
         adapter.clear();
         adapter.add(forcecasts);
         adapter.notifyDataSetChanged();

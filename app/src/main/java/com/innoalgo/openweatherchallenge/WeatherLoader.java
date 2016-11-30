@@ -2,7 +2,6 @@ package com.innoalgo.openweatherchallenge;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -13,8 +12,8 @@ import java.util.ArrayList;
 public class WeatherLoader extends AsyncTaskLoader<ArrayList<DailyWeather>> {
 
     private String mUrl;
-    final static String TAG = "WeatherLoader";//TODO TAG ALL FILES
-    private final String API_KEY = "bf2eec4c617f2acfd321fa89f113bc45";//TODO add your API KEY here
+    final static String TAG = "WeatherLoader";
+    private final String API_KEY = "bf2eec4c617f2acfd321fa89f113bc45";
 
     private final String URL_WEATHER_CURRENT = "http://api.openweathermap.org/data/2.5/weather?q=Atlanta,ga&units=imperial";
     private final String URL_WEATHER_FORECAST = "http://api.openweathermap.org/data/2.5/forecast/daily?q=Atlanta,ga&units=imperial&cnt=6";
@@ -23,7 +22,6 @@ public class WeatherLoader extends AsyncTaskLoader<ArrayList<DailyWeather>> {
 
     public WeatherLoader(Context context, String url) {
         super(context);
-        // TODO: Finish implementing this constructor
         this.mUrl = url;
         this.context = context;
     }
@@ -38,11 +36,9 @@ public class WeatherLoader extends AsyncTaskLoader<ArrayList<DailyWeather>> {
         ArrayList<DailyWeather> forecastList;
 
         if(mUrl.equalsIgnoreCase(URL_WEATHER_CURRENT)){
-            Log.d(TAG, "loadInBackground: Current Weather");
-            forecastList = QueryHelper.extractCurrentWeather(mUrl + "&appid=" + API_KEY, context);
+            forecastList = QueryHelper.getCurrentWeather(mUrl + "&appid=" + API_KEY, context);
         }else{
-            Log.d(TAG, "loadInBackground: Forecast");
-            forecastList = QueryHelper.extractForecastWeather(mUrl + "&appid=" + API_KEY, context);
+            forecastList = QueryHelper.getForecastWeather(mUrl + "&appid=" + API_KEY, context);
         }
 
         return forecastList;

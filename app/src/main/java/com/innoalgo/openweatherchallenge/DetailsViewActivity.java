@@ -9,6 +9,10 @@ import android.widget.TextView;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+/**
+ * Created by Corey on 11/29/2016.
+ */
+
 public class DetailsViewActivity extends AppCompatActivity {
 
     private DailyWeather dailyWeather;
