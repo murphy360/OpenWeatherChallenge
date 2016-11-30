@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
@@ -65,14 +67,7 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    private void updateUI(ArrayList<DailyWeather> forcecasts) {
-        Log.d(TAG, "updateUI: " + forcecasts.size());
-        adapter.clear();
-        adapter.add(forcecasts);
-        adapter.notifyDataSetChanged();
 
-
-    }
 
     @Override
     public Loader<ArrayList<DailyWeather>> onCreateLoader(int i, Bundle bundle) {
@@ -107,7 +102,11 @@ public class MainActivity extends AppCompatActivity
         Log.d(TAG, "updateToday: ");
 
         TextView date = (TextView) findViewById(R.id.today_text_date);
-        date.setText(todayWeather.getDate().toString());
+
+        // November, 29
+        DateFormat format = new SimpleDateFormat(" MMMM, dd");
+        String dateText = format.format(todayWeather.getDate());
+        date.setText(todayWeather.getDayOfWeek() + dateText);
 
         TextView temp = (TextView) findViewById(R.id.today_text_temp_current);
         int roundedCurrentTemp = (int) Math.round(todayWeather.getCurrentTemp());
@@ -119,11 +118,20 @@ public class MainActivity extends AppCompatActivity
 
         Log.d(TAG, "updateToday icon: " + todayWeather.getWeatherIconText());
         ImageView weatherIcon = (ImageView) findViewById(R.id.today_image_icon);
-        weatherIcon.setImageBitmap(todayWeather.getWeatherIcon());
+        weatherIcon.setImageBitmap(todayWeather.getWeatherIcon(this));
 
 
         TextView weather = (TextView) findViewById(R.id.today_text_description);
         weather.setText(todayWeather.getCloudText());
+
+
+    }
+
+    private void updateUI(ArrayList<DailyWeather> forcecasts) {
+        Log.d(TAG, "updateUI: " + forcecasts.size());
+        adapter.clear();
+        adapter.add(forcecasts);
+        adapter.notifyDataSetChanged();
 
 
     }

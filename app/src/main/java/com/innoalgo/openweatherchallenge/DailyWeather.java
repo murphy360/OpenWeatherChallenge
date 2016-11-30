@@ -5,6 +5,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,7 +30,7 @@ public class DailyWeather implements Serializable {
     private String iconText;
     private Double windSpeed;
     private int windDirection;
-    private Bitmap bitmap;
+    private String bitmapDirectory;
 
 
     private String TAG = "DailyWeather: ";
@@ -47,10 +50,12 @@ public class DailyWeather implements Serializable {
         this.iconText = iconText;
         this.windSpeed = windSpeed;
         this.windDirection = windDirection;
-        String mUrl = "http://openweathermap.org/img/w/";
-        byte[] mBytes = QueryHelper.imageByter(c, mUrl + this.iconText + ".png");
-        bitmap = BitmapFactory.decodeByteArray(mBytes, 0, mBytes.length);
 
+        File icon=new File(c.getFilesDir(), this.iconText + ".png");
+
+        if(!icon.exists()){
+            downloadAndWriteBitmapToFile(c);
+        }
     }
 
     public DailyWeather() {
@@ -104,7 +109,34 @@ public class DailyWeather implements Serializable {
         return maxTemp;
     }
 
-    public Bitmap getWeatherIcon() {
+    public Bitmap getWeatherIcon(Context c) {
+        File icon=new File(c.getFilesDir(), this.iconText + ".png");
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        Bitmap bitmap = BitmapFactory.decodeFile(icon.getAbsolutePath(),bmOptions);
         return bitmap;
+    }
+
+    private void downloadAndWriteBitmapToFile(Context c){
+        String mUrl = "http://openweathermap.org/img/w/";
+        byte[] mBytes = QueryHelper.imageByter(c, mUrl + this.iconText + ".png");
+        Bitmap bitmap = BitmapFactory.decodeByteArray(mBytes, 0, mBytes.length);
+
+        FileOutputStream out = null;
+        File icon=new File(c.getFilesDir(), this.iconText + ".png");
+        try {
+            out = new FileOutputStream(icon.getAbsolutePath());
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
+            // PNG is a lossless format, the compression factor (100) is ignored
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

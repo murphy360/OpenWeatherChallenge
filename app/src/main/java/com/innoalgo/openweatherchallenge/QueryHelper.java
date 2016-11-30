@@ -1,6 +1,7 @@
 package com.innoalgo.openweatherchallenge;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -265,5 +266,7 @@ public final class QueryHelper {
             return null;
         }
     }
+
+
 
 }

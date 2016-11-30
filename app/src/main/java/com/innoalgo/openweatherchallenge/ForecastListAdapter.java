@@ -35,10 +35,12 @@ import java.util.ArrayList;
 public class ForecastListAdapter extends BaseAdapter {
     private ArrayList<DailyWeather> weatherList;
     public static final String TAG = "ForecastListAdapter";
+    private Context context;
 
     public ForecastListAdapter(Context context, ArrayList<DailyWeather> weatherList) {
            super();
         this.weatherList =  weatherList;
+        this.context = context;
     }
 
     @Override
@@ -58,8 +60,6 @@ public class ForecastListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-
         // Check if an existing view is being reused, otherwise inflate the view
         View listItemView = convertView;
         if (listItemView == null) {
@@ -72,7 +72,7 @@ public class ForecastListAdapter extends BaseAdapter {
 
         Log.d(TAG, "getView icon: " + mForecast.getWeatherIconText());
         ImageView weatherView = (ImageView) listItemView.findViewById(R.id.list_weather_image_view);
-        weatherView.setImageBitmap(mForecast.getWeatherIcon());
+        weatherView.setImageBitmap(mForecast.getWeatherIcon(context));
 
         TextView dayTextView = (TextView) listItemView.findViewById(R.id.list_day);
         dayTextView.setText(mForecast.getDayOfWeek());
