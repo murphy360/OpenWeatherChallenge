@@ -139,4 +139,20 @@ public class DailyWeather implements Serializable {
             }
         }
     }
+
+    public Double getHumidity() {
+        return humidity;
+    }
+
+    public Double getPressure() {
+        return pressure;
+    }
+
+    public int getWindDirection() {
+        return windDirection;
+    }
+
+    public Double getWindSpeed() {
+        return windSpeed;
+    }
 }
