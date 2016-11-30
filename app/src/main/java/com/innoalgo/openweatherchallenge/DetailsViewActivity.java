@@ -31,12 +31,15 @@ public class DetailsViewActivity extends AppCompatActivity {
     private void connectUserInterface() {
         Log.d(TAG, "updateToday: ");
 
+        TextView day = (TextView) findViewById(R.id.details_day_text);
+        day.setText(dailyWeather.getDayOfWeek());
+
         TextView date = (TextView) findViewById(R.id.details_date_text);
 
         // November, 29
         DateFormat format = new SimpleDateFormat("\nMMMM, dd");
         String dateText = format.format(dailyWeather.getDate());
-        date.setText(dailyWeather.getDayOfWeek() + dateText);
+        date.setText(dateText);
 
         TextView maxTemp = (TextView) findViewById(R.id.details_temp_current_text);
         int roundedTemp;
@@ -61,15 +64,15 @@ public class DetailsViewActivity extends AppCompatActivity {
 
 
         TextView humidity = (TextView) findViewById(R.id.details_humidity_text);
-        humidity.setText(dailyWeather.getHumidity() + "%");
+        humidity.setText("Humidity: " + dailyWeather.getHumidity() + "%");
 
         TextView pressure = (TextView) findViewById(R.id.details_pressure_text);
-        pressure.setText(dailyWeather.getPressure() + " hPa");
+        pressure.setText("Pressure: " + dailyWeather.getPressure() + " hPa");
 
         TextView wind = (TextView) findViewById(R.id.details_wind_text);
         String windDirection = getCardinalDirections(dailyWeather.getWindDirection());
         double windSpeed = dailyWeather.getWindSpeed();
-        wind.setText(windSpeed + " km/h " + windDirection);
+        wind.setText("Wind: " + windSpeed + " km/h " + windDirection);
 
 
 
