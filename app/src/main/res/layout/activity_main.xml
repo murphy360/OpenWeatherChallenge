@@ -6,30 +6,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.innoalgo.openweatherchallenge.MainActivity">
 
     <LinearLayout
+        android:id="@+id/today_linear_layout"
         android:layout_width="match_parent"
-        android:layout_height="154dp"
-        android:orientation="horizontal">
+        android:layout_height="250dp"
+        android:orientation="horizontal"
+        android:elevation="10dp"
+        android:background="@color/colorLightBlue">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/today_text_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Today, June 18" />
+                android:text="Today, June 18"
+                android:textSize="22sp"
+                android:textColor="@color/colorWhite"/>
 
             <TextView
                 android:id="@+id/today_text_temp_current"
@@ -37,14 +39,17 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="28"
-                android:textSize="42sp" />
+                android:textSize="48sp"
+                android:textColor="@color/colorWhite" />
 
             <TextView
                 android:id="@+id/today_text_temp_low"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="13" />
+                android:text="13"
+                android:textSize="28sp"
+                android:textColor="@color/colorWhite"/>
         </LinearLayout>
 
         <LinearLayout
@@ -56,8 +61,8 @@
 
             <ImageView
                 android:id="@+id/today_image_icon"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 app:srcCompat="@drawable/art_clear" />
 
             <TextView
@@ -65,13 +70,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Clear" />
+                android:text="Clear"
+                android:textSize="22sp"
+                android:textColor="@color/colorWhite"/>
         </LinearLayout>
     </LinearLayout>
 
     <ListView
         android:id="@+id/forcecast_list_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"/>
 
 </LinearLayout>

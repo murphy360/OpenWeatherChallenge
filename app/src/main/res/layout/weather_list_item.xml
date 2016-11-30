@@ -20,7 +20,8 @@
     android:layout_height="88dp"
     android:orientation="horizontal"
     android:background="@android:color/white"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:elevation="5dp">
 
     <ImageView
         android:id="@+id/list_weather_image_view"
