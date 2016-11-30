@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -55,12 +54,17 @@ public class MainActivity extends AppCompatActivity
         forcecastListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                //Get SensorObject from listView
-                DailyWeather dailyWeather = (DailyWeather) (forcecastListView.getItemAtPosition(position));
+
+            DailyWeather dailyWeather = (DailyWeather) (forcecastListView.getItemAtPosition(position));
+            if (dailyWeather != null) {
                 Intent intent = new Intent(view.getContext(),
                         DetailsViewActivity.class);
                 intent.putExtra("weather", dailyWeather);
                 startActivityForResult(intent, INTENT_DETAILS);
+            }
+
+
+
             }
         });
 
@@ -68,10 +72,13 @@ public class MainActivity extends AppCompatActivity
         todayLinearLayout.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(),
-                        DetailsViewActivity.class);
-                intent.putExtra("weather", todayWeather);
-                startActivityForResult(intent, INTENT_DETAILS);
+
+               if(todayWeather != null){
+                   Intent intent = new Intent(v.getContext(),
+                           DetailsViewActivity.class);
+                   intent.putExtra("weather", todayWeather);
+                   startActivityForResult(intent, INTENT_DETAILS);
+               }
             }
 
         });
@@ -93,11 +100,9 @@ public class MainActivity extends AppCompatActivity
     public void onLoadFinished(Loader<ArrayList<DailyWeather>> loader, ArrayList<DailyWeather> dailyWeathers) {
 
         if (dailyWeathers != null && dailyWeathers.size() == 1) {
-            Log.d(TAG, "onLoadFinished: today");
             todayWeather = dailyWeathers.get(0);
             updateToday();
         }else if(dailyWeathers != null && !dailyWeathers.isEmpty()){
-            Log.d(TAG, "onLoadFinished: Forecast");
             updateUI(dailyWeathers);
         }
     }
