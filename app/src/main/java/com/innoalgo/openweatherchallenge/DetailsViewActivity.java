@@ -3,7 +3,6 @@ package com.innoalgo.openweatherchallenge;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,7 +28,6 @@ public class DetailsViewActivity extends AppCompatActivity {
     }
 
     private void connectUserInterface() {
-        Log.d(TAG, "updateToday: ");
 
         TextView day = (TextView) findViewById(R.id.details_day_text);
         day.setText(dailyWeather.getDayOfWeek());
@@ -54,14 +52,11 @@ public class DetailsViewActivity extends AppCompatActivity {
         int roundedMinTemp = (int) Math.round(dailyWeather.getMinTemp());
         lowTemp.setText(String.valueOf(roundedMinTemp) + (char) 0x00B0);
 
-        Log.d(TAG, "updateToday icon: " + dailyWeather.getWeatherIconText());
         ImageView weatherIcon = (ImageView) findViewById(R.id.details_weather_image_view);
         weatherIcon.setImageBitmap(dailyWeather.getWeatherIcon(this));
 
-
         TextView weather = (TextView) findViewById(R.id.details_weather_text);
         weather.setText(dailyWeather.getCloudText());
-
 
         TextView humidity = (TextView) findViewById(R.id.details_humidity_text);
         humidity.setText("Humidity: " + dailyWeather.getHumidity() + "%");
@@ -79,7 +74,6 @@ public class DetailsViewActivity extends AppCompatActivity {
 
     }
 
-    //TODO Running the risk of off by one
     //Should be using points (11.25 degrees) but will make due with ints
     private String getCardinalDirections(int windDirection){
         String cardinalDirection = "";
@@ -100,9 +94,6 @@ public class DetailsViewActivity extends AppCompatActivity {
         }else if(windDirection > 292 && windDirection < 338){
             cardinalDirection = "NW";
         }
-
-
         return cardinalDirection;
-
     }
 }

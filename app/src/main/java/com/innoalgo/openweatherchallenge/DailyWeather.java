@@ -37,7 +37,7 @@ public class DailyWeather implements Serializable {
 
     public DailyWeather(Date d, Double temp, Double tempMin, Double tempMax, Double humidity,
                         Double pressure, String cloudText, String cloudDescription, String iconText,
-                        Double windSpeed, int windDirection, Context c) {
+                        Double windSpeed, int windDirection, Context context) {
         Log.d(TAG, "Date: " + d.toString());
         this.date = d;
         this.currentTemp = temp;
@@ -51,18 +51,14 @@ public class DailyWeather implements Serializable {
         this.windSpeed = windSpeed;
         this.windDirection = windDirection;
 
-        File icon=new File(c.getFilesDir(), this.iconText + ".png");
+        File icon = new File(context.getFilesDir(), this.iconText + ".png");
 
-        if(!icon.exists()){
-            downloadAndWriteBitmapToFile(c);
+        if (!icon.exists()) {
+            Bitmap bitmap = downloadBitmap(context);
+            writeBitmapToFile(context, bitmap);
         }
     }
 
-    public DailyWeather() {
-
-    }
-
-    //TODO Create Constructor
 
     public String getWeatherIconText() {
         return iconText;
@@ -74,12 +70,12 @@ public class DailyWeather implements Serializable {
         today.setMinutes(0);
         today.setSeconds(0);
         Log.d(TAG, "getDayOfWeek: \n" + date.toString() + "\n" + today.toString());
-        if(date.getDay() - today.getDay() == 0){
+        if (date.getDay() - today.getDay() == 0) {
             return "Today";
-        }else if(date.getDay() - today.getDay() == 1
-                || date.getDay() - today.getDay() == -6 ){
+        } else if (date.getDay() - today.getDay() == 1
+                || date.getDay() - today.getDay() == -6) {
             return "Tomorrow";
-        }else{
+        } else {
             DateFormat format = new SimpleDateFormat("EEEE");
             return format.format(date);
         }
@@ -110,19 +106,22 @@ public class DailyWeather implements Serializable {
     }
 
     public Bitmap getWeatherIcon(Context c) {
-        File icon=new File(c.getFilesDir(), this.iconText + ".png");
+        File icon = new File(c.getFilesDir(), this.iconText + ".png");
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        Bitmap bitmap = BitmapFactory.decodeFile(icon.getAbsolutePath(),bmOptions);
+        Bitmap bitmap = BitmapFactory.decodeFile(icon.getAbsolutePath(), bmOptions);
         return bitmap;
     }
 
-    private void downloadAndWriteBitmapToFile(Context c){
+    private Bitmap downloadBitmap(Context c){
         String mUrl = "http://openweathermap.org/img/w/";
         byte[] mBytes = QueryHelper.imageByter(c, mUrl + this.iconText + ".png");
         Bitmap bitmap = BitmapFactory.decodeByteArray(mBytes, 0, mBytes.length);
+        return bitmap;
+    }
 
+    private void writeBitmapToFile(Context c, Bitmap bitmap) {
         FileOutputStream out = null;
-        File icon=new File(c.getFilesDir(), this.iconText + ".png");
+        File icon = new File(c.getFilesDir(), this.iconText + ".png");
         try {
             out = new FileOutputStream(icon.getAbsolutePath());
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance

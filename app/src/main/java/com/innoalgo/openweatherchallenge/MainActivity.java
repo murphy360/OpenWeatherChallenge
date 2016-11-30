@@ -41,11 +41,8 @@ public class MainActivity extends AppCompatActivity
 
         connectUserInterface();
 
-
         getLoaderManager().initLoader(WEATHER_LOADER_FORECAST_ID, null, this).forceLoad();
         getLoaderManager().initLoader(WEATHER_LOADER_TODAY_ID, null, this).forceLoad();
-
-
     }
 
     private void connectUserInterface() {
@@ -86,7 +83,6 @@ public class MainActivity extends AppCompatActivity
     public Loader<ArrayList<DailyWeather>> onCreateLoader(int i, Bundle bundle) {
 
         if(i == WEATHER_LOADER_FORECAST_ID){
-
             return new WeatherLoader(this, URL_WEATHER_CURRENT);
         }else{
             return new WeatherLoader(this, URL_WEATHER_FORECAST);
@@ -145,7 +141,5 @@ public class MainActivity extends AppCompatActivity
         adapter.clear();
         adapter.add(forcecasts);
         adapter.notifyDataSetChanged();
-
-
     }
 }

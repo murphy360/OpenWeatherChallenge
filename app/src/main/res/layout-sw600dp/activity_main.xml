@@ -12,9 +12,9 @@
         android:id="@+id/today_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:orientation="horizontal"
+        android:background="@color/colorLightBlue"
         android:elevation="10dp"
-        android:background="@color/colorLightBlue">
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -30,8 +30,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Today, June 18"
-                android:textSize="22sp"
-                android:textColor="@color/colorWhite"/>
+                android:textColor="@color/colorWhite"
+                android:textSize="22sp"/>
 
             <TextView
                 android:id="@+id/today_text_temp_current"
@@ -39,8 +39,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="28"
-                android:textSize="48sp"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:textSize="48sp" />
 
             <TextView
                 android:id="@+id/today_text_temp_low"
@@ -48,8 +48,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="13"
-                android:textSize="28sp"
-                android:textColor="@color/colorWhite"/>
+                android:textColor="@color/colorWhite"
+                android:textSize="28sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -71,8 +71,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Clear"
-                android:textSize="22sp"
-                android:textColor="@color/colorWhite"/>
+                android:textColor="@color/colorWhite"
+                android:textSize="22sp"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -80,8 +80,8 @@
         android:id="@+id/forcecast_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"/>
+        android:layout_marginRight="16dp"
+        android:background="@color/colorWhite"/>
 
 </LinearLayout>

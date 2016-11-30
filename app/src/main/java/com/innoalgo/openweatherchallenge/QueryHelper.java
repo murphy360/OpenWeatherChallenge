@@ -1,7 +1,6 @@
 package com.innoalgo.openweatherchallenge;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -20,9 +19,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * Helper methods related to requesting and receiving earthquake data from USGS.
- */
+
 public final class QueryHelper {
 
     private static final String TAG = "QUERYUTILS";
@@ -36,9 +33,6 @@ public final class QueryHelper {
     private QueryHelper() {
     }
 
-    /**
-     * Query the USGS dataset and return a List of {@link DailyWeather} objects to represent a single earthquake.
-     */
     public static String fetchWeatherData(String requestUrl) {
         Log.d(TAG, "fetchWeatherData: ");
         // Create URL object
@@ -109,7 +103,7 @@ public final class QueryHelper {
             // If an error is thrown when executing any of the above statements in the "try" block,
             // catch the exception here, so the app doesn't crash. Print a log message
             // with the message from the exception.
-            Log.e(TAG, "Problem parsing the earthquake JSON results", e);
+            Log.e(TAG, "Problem parsing the JSON results", e);
             return null;//TODO is this right?
         }
 
@@ -168,7 +162,7 @@ public final class QueryHelper {
             // If an error is thrown when executing any of the above statements in the "try" block,
             // catch the exception here, so the app doesn't crash. Print a log message
             // with the message from the exception.
-            Log.e(TAG, "Problem parsing the earthquake JSON results", e);
+            Log.e(TAG, "Problem parsing the JSON results", e);
             return null;//TODO is this right?
         }
         return weathers;
@@ -217,7 +211,7 @@ public final class QueryHelper {
                 Log.e(TAG, "Error response code: " + urlConnection.getResponseCode());
             }
         } catch (IOException e) {
-            Log.e(TAG, "Problem retrieving the earthquake JSON results.", e);
+            Log.e(TAG, "Problem retrieving the JSON results.", e);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
