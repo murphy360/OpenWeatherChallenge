@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -64,6 +65,18 @@ public class MainActivity extends AppCompatActivity
                 intent.putExtra("weather", dailyWeather);
                 startActivityForResult(intent, INTENT_DETAILS);
             }
+        });
+
+        LinearLayout todayLinearLayout = (LinearLayout) findViewById(R.id.today_linear_layout);
+        todayLinearLayout.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(),
+                        DetailsViewActivity.class);
+                intent.putExtra("weather", todayWeather);
+                startActivityForResult(intent, INTENT_DETAILS);
+            }
+
         });
     }
 
